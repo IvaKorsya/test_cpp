@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.24.2)
 project(testproj CXX)
 
+if(MSVC) #for Visual Studio
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)
+endif()
+
 include(FetchContent)
 FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/6b63c98ac43efc992122f1da12aaf0a0e0658206.zip)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
