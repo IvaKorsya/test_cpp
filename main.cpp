@@ -77,3 +77,15 @@ TEST_F(CandleFixture,bodySize_redCandle){
 TEST_F(CandleFixture,bodySize_greenCandle){
     ASSERT_DOUBLE_EQ(greenCandle.body_size(),1.);
 }
+
+TEST_F(CandleFixture,isGreen_NullCandle){
+    ASSERT_FALSE(nullCandle.is_green());//nullCandle isn't green
+}
+
+TEST_F(CandleFixture,isGreen_redCandle){
+    ASSERT_FALSE(redCandle.is_green());
+}
+
+TEST_F(CandleFixture,isGreen_greenCandle){
+    ASSERT_TRUE(greenCandle.is_green());
+}
