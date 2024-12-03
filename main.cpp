@@ -78,8 +78,20 @@ TEST_F(CandleFixture,bodySize_greenCandle){
     ASSERT_DOUBLE_EQ(greenCandle.body_size(),1.);
 }
 
+TEST_F(CandleFixture,isRed_NullCandle){
+    ASSERT_FALSE(nullCandle.is_red());//nullCandle isn't red - TRUE
+}
+
+TEST_F(CandleFixture,isRed_redCandle){
+    ASSERT_TRUE(redCandle.is_red());
+}
+
+TEST_F(CandleFixture,isRed_greenCandle){
+    ASSERT_FALSE(greenCandle.is_red());
+}
+
 TEST_F(CandleFixture,isGreen_NullCandle){
-    ASSERT_FALSE(nullCandle.is_green());//nullCandle isn't green
+    ASSERT_FALSE(nullCandle.is_green());//and nullCandle isn't green - FALSE!
 }
 
 TEST_F(CandleFixture,isGreen_redCandle){
@@ -88,4 +100,11 @@ TEST_F(CandleFixture,isGreen_redCandle){
 
 TEST_F(CandleFixture,isGreen_greenCandle){
     ASSERT_TRUE(greenCandle.is_green());
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    int result = RUN_ALL_TESTS();
+
+    return result; // Возвращаем результат выполнения тестов
 }
