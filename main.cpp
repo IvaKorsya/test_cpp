@@ -1,72 +1,36 @@
 ﻿#include <vector>
 #include <functional>
 #include <iostream>
+#include <gtest/gtest.h>
 
 #include "candle.h"
 
-//массив всех тестов, который мы заполняем в функции initTests
-static std::vector<std::function<bool()>> tests;
+class CandleFixture: public ::testing::Test{
+protected:
+    Candle greenCandle;
+    Candle redCandle;
 
-//тест 1
-bool test1()
-{
-  //пример какого-то теста
-  return 42 == (41 + 1); //passed
-}
-
-//тест 2
-bool test2()
-{
-  //пример какого-то теста
-  return 42 != (41 + 1); //failed
-}
-
-//тест 3
-bool test3()
-{
-  Candle candle{ 0.0, 3.0, 3.0, 3.0 };
-
-  //пример какого-то теста
-  return candle.high == 3.0;
-}
-
-void initTests()
-{
-  tests.push_back(test1);
-  tests.push_back(test2);
-  tests.push_back(test3);
-  //tests.push_back(test4);
-  //tests.push_back(test5);
-}
-
-int launchTests()
-{
-  int total = 0;
-  int passed = 0;
-
-  for (const auto& test : tests)
-  {
-    std::cout << "test #" << (total + 1);
-    if (test())
-    {
-      passed += 1;
-      std::cout << " passed\n";
+    void SetUp() override{
+        greenCandle = Candle(2., 3.1, 1., 3.);
+        redCandle = Candle(3., 3.1, 1., 2.);
     }
-    else
-    {
-      std::cout << " failed\n";
-    }
-    total += 1;
-  }
+public:
+    ~CandleFixture() override = default;
+};
 
-  std::cout << "\ntests " << passed << "/" << total << " passed!" << std::endl;
-
-  //0 = success
-  return total - passed;
+TEST_F(CandleFixture,bodyContains_NotContained){
+    ASSERT_FALSE(greenCandle.body_contains(1.1));
+    ASSERT_FALSE(redCandle.body_contains(1.1));
 }
 
-int main()
-{
-  initTests();
-  return launchTests();
+TEST_F(CandleFixture,bodyContains_Contained){
+    ASSERT_TRUE(greenCandle.body_contains(2.1));
+    ASSERT_TRUE(redCandle.body_contains(2.1));
+}
+
+TEST_F(CandleFixture,bodyContains_EqualsLowOrHigh){
+    ASSERT_TRUE(greenCandle.body_contains(2.0));
+    ASSERT_TRUE(greenCandle.body_contains(3.0));
+    ASSERT_TRUE(redCandle.body_contains(2.0));
+    ASSERT_TRUE(redCandle.body_contains(3.0));
 }
