@@ -65,3 +65,15 @@ TEST_F(CandleFixture,fullSize_redCandle){
 TEST_F(CandleFixture,fullSize_greenCandle){
     ASSERT_DOUBLE_EQ(greenCandle.full_size(),2.1);
 }
+
+TEST_F(CandleFixture,bodySize_NullCandle){
+    ASSERT_DOUBLE_EQ(nullCandle.body_size(),0.);
+}
+
+TEST_F(CandleFixture,bodySize_redCandle){
+    ASSERT_DOUBLE_EQ(redCandle.body_size(),1.);
+}
+
+TEST_F(CandleFixture,bodySize_greenCandle){
+    ASSERT_DOUBLE_EQ(greenCandle.body_size(),1.);
+}
