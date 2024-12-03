@@ -9,10 +9,12 @@ class CandleFixture: public ::testing::Test{
 protected:
     Candle greenCandle;
     Candle redCandle;
+    Candle nullCandle;
 
     void SetUp() override{
         greenCandle = Candle(2., 3.1, 1., 3.);
         redCandle = Candle(3., 3.1, 1., 2.);
+        nullCandle = Candle(0.,0.,0.,0.);
     }
 public:
     ~CandleFixture() override = default;
@@ -50,4 +52,16 @@ TEST_F(CandleFixture,contains_EqualsLowOrHigh){
     ASSERT_TRUE(greenCandle.contains(1.));
     ASSERT_TRUE(redCandle.contains(3.1));
     ASSERT_TRUE(redCandle.contains(1.));
+}
+
+TEST_F(CandleFixture,fullSize_NullCandle){
+    ASSERT_DOUBLE_EQ(nullCandle.full_size(),0.);
+}
+
+TEST_F(CandleFixture,fullSize_redCandle){
+    ASSERT_DOUBLE_EQ(redCandle.full_size(),2.1);
+}
+
+TEST_F(CandleFixture,fullSize_greenCandle){
+    ASSERT_DOUBLE_EQ(greenCandle.full_size(),2.1);
 }
